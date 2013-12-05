@@ -1,15 +1,15 @@
 package com.athloneitf.datatypes;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import com.athloneitf.datatypes.Common;
 
 public class AITFClass {
 	
 	private ClassType classType;
 	private Date classDate;
 	private Instructor classInstructor;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm dd/MMM/yyyy");
+	
 	
 	
 	public Instructor getClassInstructor() {
@@ -40,7 +40,7 @@ public class AITFClass {
 	}
 	
 		public String toString(){
-		return classType+" class\n"+dateFormat.format(getClassDate())+
+		return classType+" class\n"+Common.dateFormat.format(getClassDate())+
 				"\n"+getClassInstructor().getInstructorName();
 		
 	}

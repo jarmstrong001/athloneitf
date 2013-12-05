@@ -1,21 +1,22 @@
 package com.athloneitf.datatypes;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Column;
 
+@Entity(name="AITFMemberTable")
 public class AITFMember{
 	
-	private String memberName;
+	@Column(name="MemberFirstName")
+	private String FirstName;
+	@Column(name="MemberSurname")
+	private String Surname;
+	@Column(name="DateOfBirth")
 	private Date memberDob;
+	@Column(name="MemberBarCode")
 	private int memberCode;
-	private SimpleDateFormat dobDateFormat=new SimpleDateFormat("dd/MMM/yyyy");
 	
-	public String getMemberName() {
-		return memberName;
-	}
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
+		
 	public Date getMemberDob() {
 		return memberDob;
 	}
@@ -28,14 +29,27 @@ public class AITFMember{
 	public void setMemberCode(int memberCode) {
 		this.memberCode = memberCode;
 	}
-	
-	public String toString(){
-		return getMemberName()+"\t"+dobDateFormat.format(getMemberDob())+"\t"+getMemberCode();
+	public String getFirstName() {
+		return FirstName;
+	}
+	public void setFirstName(String firstName) {
+		FirstName = firstName;
+	}
+	public String getSurname() {
+		return Surname;
+	}
+	public void setSurname(String surnmae) {
+		Surname = surnmae;
 	}
 	
+	public String toString(){
+		return getFirstName()+" "+getSurname()+"\t"+Common.dobDateFormat.format(getMemberDob())+"\t"+getMemberCode();
+	}
 	
-	
-	
-
-
 }
+	
+	
+	
+	
+
+
