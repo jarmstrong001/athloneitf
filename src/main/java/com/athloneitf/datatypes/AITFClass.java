@@ -1,6 +1,7 @@
 package com.athloneitf.datatypes;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AITFClass {
@@ -32,7 +33,13 @@ public class AITFClass {
 		this.classType = classType;
 	}
 	
-	public String toString(){
+	public int getDayOfWeek(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(getClassDate());
+		return calendar.get(Calendar.DAY_OF_WEEK);		
+	}
+	
+		public String toString(){
 		return classType+" class\n"+dateFormat.format(getClassDate())+
 				"\n"+getClassInstructor().getInstructorName();
 		
