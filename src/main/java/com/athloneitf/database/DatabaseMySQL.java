@@ -68,7 +68,7 @@ public class DatabaseMySQL {
 			returnMember.setFirstName(memberResultSet.getString("MemberFirstName"));
 			returnMember.setSurname(memberResultSet.getString("MemberSurname"));
 			returnMember.setMemberDob(memberResultSet.getDate("DateOfBirth"));
-			returnMember.setMemberCode(memberResultSet.getInt("DateOfBirth"));
+			returnMember.setMemberCode(memberResultSet.getInt("MemberBarCode"));
 			return returnMember;
 		}
 		return null;
