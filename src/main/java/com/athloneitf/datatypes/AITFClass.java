@@ -2,7 +2,8 @@ package com.athloneitf.datatypes;
 
 import java.util.Calendar;
 import java.util.Date;
-import com.athloneitf.datatypes.Common;
+
+import com.athloneitf.main.Common;
 
 public class AITFClass {
 	

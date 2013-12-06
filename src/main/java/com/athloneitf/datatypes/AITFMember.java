@@ -1,16 +1,19 @@
 package com.athloneitf.datatypes;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Column;
 
-@Entity(name="AITFMemberTable")
+import com.athloneitf.main.Common;
+
+@Entity(name="AITF_Member_Table")
 public class AITFMember{
 	
 	@Column(name="MemberFirstName")
-	private String FirstName;
+	private String firstName;
 	@Column(name="MemberSurname")
-	private String Surname;
+	private String surname;
 	@Column(name="DateOfBirth")
 	private Date memberDob;
 	@Column(name="MemberBarCode")
@@ -30,16 +33,20 @@ public class AITFMember{
 		this.memberCode = memberCode;
 	}
 	public String getFirstName() {
-		return FirstName;
+		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
+	public void setFirstName(String memberFirstName) {
+		firstName = memberFirstName;
 	}
 	public String getSurname() {
-		return Surname;
+		return surname;
 	}
-	public void setSurname(String surnmae) {
-		Surname = surnmae;
+	public void setSurname(String memberSurname) {
+		surname = memberSurname;
+	}
+	
+	public String getName() {
+		return firstName+" "+surname;
 	}
 	
 	public String toString(){
