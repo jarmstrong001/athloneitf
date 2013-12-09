@@ -2,12 +2,12 @@ package com.athloneitf.datatypes;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 import com.athloneitf.main.Common;
 
-@Entity(name="AITF_Member_Table")
+@Entity
+@Table(name="AITF_Member_Table")
 public class AITFMember{
 	
 	@Column(name="MemberFirstName")
@@ -16,6 +16,7 @@ public class AITFMember{
 	private String surname;
 	@Column(name="DateOfBirth")
 	private Date memberDob;
+	@Id
 	@Column(name="MemberBarCode")
 	private int memberCode;
 	
