@@ -30,6 +30,7 @@
         <property name="hibernate.current_session_context_class">thread</property>  
   
         <mapping class="com.athloneitf.datatypes.AITFMember" />
+        <mapping class="com.athloneitf.datatypes.InstructorLogin" />
     </session-factory>  
   
 </hibernate-configuration>  

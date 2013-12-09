@@ -9,14 +9,14 @@ public class AITFClass {
 	
 	private ClassType classType;
 	private Date classDate;
-	private Instructor classInstructor;
+	private AITFMember classInstructor;
 	
 	
 	
-	public Instructor getClassInstructor() {
+	public AITFMember getClassInstructor() {
 		return classInstructor;
 	}
-	public void setClassInstructor(Instructor classInstructor) {
+	public void setClassInstructor(AITFMember classInstructor) {
 		this.classInstructor = classInstructor;
 	}
 	
@@ -42,7 +42,7 @@ public class AITFClass {
 	
 		public String toString(){
 		return classType+" class\n"+Common.dateFormat.format(getClassDate())+
-				"\n"+getClassInstructor().getInstructorName();
+				"\n"+getClassInstructor().getName();
 		
 	}
 	

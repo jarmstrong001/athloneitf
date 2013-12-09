@@ -1,68 +1,52 @@
 package com.athloneitf.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
-import java.util.ArrayList;
+import java.util.*;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.athloneitf.datatypes.AITFMember;
+import com.athloneitf.main.SessionFactoryUtil;
 
 public class DatabaseMySQL {
 
-	private Connection connect = null;
-	private Statement statement = null;
-	private ResultSet resultSet = null;
-
-	public void connectDataBase() {
-		if(connect==null){
-		try {
-			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
-			// Setup the connection with the DB
-			connect = DriverManager
-					.getConnection("jdbc:mysql://localhost/aitf?"
-							+ "user=root&password=");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}
-
+	public Session startSession(){
+		Session session = SessionFactoryUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		return session;
 	}
 	
 	public AITFMember loginInstructor(String instructorBarCode){
 		AITFMember returnValue=null;
 		try {
-			PreparedStatement psInstructorLogin =
-					connect.prepareStatement("SELECT * FROM aitf_member_table "+
-			"WHERE Instructor>0 and MemberBarCode="+instructorBarCode);
-			ResultSet loginResult=psInstructorLogin.executeQuery();
-			returnValue=parseAITFMember(loginResult);
-			if (returnValue!=null){
-				logoutAllInstructors();
+			Session session=startSession();
+			Query instructorLoginQuery = session.createQuery("FROM AITFMember "+
+			"WHERE Instructor=TRUE and MemberCode="+instructorBarCode);
+			List<AITFMember> instructor=instructorLoginQuery.list();
+			if (instructor.size()==0){
+				logoutAllInstructors(session);
 				// Log instructor into database
-				PreparedStatement psRecordLogin =
-						connect.prepareStatement("INSERT INTO instructor_login "+
+				Query instructorLoginInsert=session.createQuery("INSERT INTO instructor_login "+
 				"(MemberCode,LoginTime) VALUES ("+instructorBarCode+",now())");
-				psRecordLogin.executeUpdate();
+				instructorLoginInsert.executeUpdate();
 			}
 		} catch(SQLException sqle){sqle.printStackTrace();}
 		return returnValue;
 	}
 	
-	private void logoutAllInstructors() throws SQLException{
+	private void logoutAllInstructors(Session session) throws SQLException{
 		// Logout all instructors from database
-		PreparedStatement psLogoutInstructors =
-				connect.prepareStatement("UPDATE instructor_login SET LogoutTime="+
+		Query instructorLoginUpdate = session.createQuery("UPDATE instructor_login SET LogoutTime="+
 						"now() WHERE LogoutTime IS NULL");
-				psLogoutInstructors.executeUpdate();
 	}
 	
-	private AITFMember parseAITFMember(ResultSet memberResultSet) throws SQLException{
+	
+	
+	/*private AITFMember parseAITFMember(ResultSet memberResultSet) throws SQLException{
 		while(memberResultSet.next()){
 			AITFMember returnMember=new AITFMember();
 			returnMember.setFirstName(memberResultSet.getString("MemberFirstName"));
@@ -74,9 +58,7 @@ public class DatabaseMySQL {
 		return null;
 	}
 	
-	
-	
-	
+		
 
 	public void traceMemberList() {
 		// Statements allow to issue SQL queries to the database
@@ -101,5 +83,6 @@ public class DatabaseMySQL {
 
 		}
 	}
+	*/
 
 }

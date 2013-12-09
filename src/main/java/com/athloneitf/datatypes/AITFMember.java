@@ -19,8 +19,17 @@ public class AITFMember{
 	@Id
 	@Column(name="MemberBarCode")
 	private int memberCode;
+	@Column(name="Instructor")
+	private boolean instructor;
 	
 		
+	
+	public boolean isInstructor() {
+		return instructor;
+	}
+	public void setInstructor(boolean instructor) {
+		this.instructor = instructor;
+	}
 	public Date getMemberDob() {
 		return memberDob;
 	}
@@ -51,7 +60,9 @@ public class AITFMember{
 	}
 	
 	public String toString(){
-		return getFirstName()+" "+getSurname()+"\t"+Common.dobDateFormat.format(getMemberDob())+"\t"+getMemberCode();
+		return getFirstName()+" "+getSurname()+"\t"+
+	Common.dobDateFormat.format(getMemberDob())+"\t"+getMemberCode()+
+	(isInstructor() ? "\tinstructor":"");
 	}
 	
 }
