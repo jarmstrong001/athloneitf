@@ -44,9 +44,11 @@ public class UserInterface extends JFrame {
         		AITFMember instructor=database.loginInstructor(loginTextField.getText());
         		if(instructor!=null) {
         			System.out.println(instructor.toString());
-        			MemberCheckInInterface mcii=new MemberCheckInInterface(instructor);
+        			/*MemberCheckInInterface mcii=new MemberCheckInInterface(instructor);
         			Common.delay(2000);
-        			mcii.setVisible(true);
+        			mcii.setVisible(true);*/
+        			ClassSelectDialog csd=new ClassSelectDialog();
+        			csd.setVisible(true);
         			UserInterface.this.dispose();
         		}
         		else {

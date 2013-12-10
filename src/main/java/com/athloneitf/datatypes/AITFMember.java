@@ -7,7 +7,6 @@ import javax.persistence.*;
 import com.athloneitf.main.Common;
 
 @Entity
-@Table(name="AITF_Member_Table")
 public class AITFMember{
 	
 	@Column(name="MemberFirstName")
