@@ -24,7 +24,7 @@
         <property name="hibernate.show_sql">true</property>  
   
         <!-- Drop and re-create the database schema on startup   
-        <property name="hibernate.hbm2ddl.auto">create</property>  -->
+        <property name="hibernate.hbm2ddl.auto">create</property> --> 
         
         <!-- current context -->
         <property name="hibernate.current_session_context_class">thread</property>  
@@ -33,6 +33,8 @@
         <mapping class="com.athloneitf.datatypes.InstructorLogin" />
         <mapping class="com.athloneitf.datatypes.AITFClass" />
         <mapping class="com.athloneitf.datatypes.AITFSchedule" />
+        <mapping class="com.athloneitf.datatypes.MemberScanIn" />
+        <mapping class="com.athloneitf.datatypes.MemberScanOut" />
     </session-factory>  
   
 </hibernate-configuration>  

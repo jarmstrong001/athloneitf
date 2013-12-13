@@ -21,6 +21,24 @@ public class AITFClass {
 	@ManyToOne
 	@JoinColumn(name = "MemberBarCode")
 	private AITFMember classInstructor;
+	@ManyToOne
+	private AITFSchedule aitfSchedule;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public AITFSchedule getAitfScheduleId() {
+		return aitfSchedule;
+	}
+
+	public void setAitfScheduleId(AITFSchedule aitfSchedule) {
+		this.aitfSchedule = aitfSchedule;
+	}
 
 	public AITFMember getClassInstructor() {
 		return classInstructor;

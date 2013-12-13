@@ -2,5 +2,5 @@ package com.athloneitf.datatypes;
 
 
 public enum ClassType {
-	TAEKWONDO,SKYBOXING;
+	TAEKWONDO,SKYBOXING,OTHER;
 }
