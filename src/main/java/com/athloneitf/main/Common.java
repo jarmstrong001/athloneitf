@@ -69,6 +69,7 @@ public class Common {
 	}
 	
 	public static void autoScanOut(){
+		List<AITFMember> memberList; 
 		Session session=startSession();
 		Query autoScanOutUpdate = session.createSQLQuery("INSERT INTO MemberScanOut (ScanOutTime,"+
 				"MemberCode,AutoScanOut) VALUES(now(),MemberScanIn.MemberCode,TRUE) "+
