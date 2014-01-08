@@ -46,6 +46,7 @@ public class Common {
 				System.out.println(member.size()+" records");
 				session.getTransaction().commit();
 				if(member.size()>0) returnMember=member.get(0);
+				session.getTransaction().commit();
 				return returnMember;		
 	}
 	
@@ -54,8 +55,11 @@ public class Common {
 		MemberScanIn scanIn=new MemberScanIn();
 		scanIn.setMemberCode(member.getMemberCode());
 		scanIn.setScanInTime(new Date());
+		member.setScannedInStatus(true);
+		session.save(member);
 		session.save(scanIn);
 		session.getTransaction().commit();
+		
 	}
 	
 	public static void memberScanOut(AITFMember member,boolean auto){
@@ -64,6 +68,8 @@ public class Common {
 		scanOut.setMemberCode(member.getMemberCode());
 		scanOut.setScanOutTime(new Date());
 		scanOut.setAutoScanOut(auto);
+		member.setScannedInStatus(false);
+		session.save(member);
 		session.save(scanOut);
 		session.getTransaction().commit();
 	}
@@ -81,31 +87,9 @@ public class Common {
 	public static boolean isMemberScannedIn(String barCode){
 		autoScanOut();
 		Session session=startSession();
-		Query memberInQuery = session.createQuery("FROM MemberScanIn "+
-				"WHERE MemberBarCode="+barCode+" ORDER BY ScanInTime DESC LIMIT 1");
-		List<MemberScanIn> memberIn=memberInQuery.list();
-		System.out.println(memberIn.size()+" records");
+		AITFMember member=getMember(barCode);
 		session.getTransaction().commit();
-		MemberScanIn msi=null;
-		if(memberIn.size()>0){
-			msi=memberIn.get(0);
-		}
-		else return false;
-		Query memberQuery = session.createQuery("FROM MemberScanOut "+
-				"WHERE MemberBarCode="+barCode+" ORDER BY ScanOutTime DESC LIMIT 1");
-		List<MemberScanOut> memberOut=memberInQuery.list();
-		System.out.println(memberOut.size()+" records");
-		session.getTransaction().commit();
-		MemberScanOut mso=null;
-		if(memberOut.size()>0){
-			mso=memberOut.get(0);
-			if(msi.getScanInTime().compareTo(mso.getScanOutTime())<0) return false;
-			
-		}
-		return true;
-		
-		
-		
+		return member.isScannedInStatus();		
 	}
 	
 	public static String getDayOfWeek(int i){

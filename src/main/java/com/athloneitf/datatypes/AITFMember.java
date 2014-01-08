@@ -20,9 +20,17 @@ public class AITFMember{
 	private int memberCode;
 	@Column(name="Instructor")
 	private boolean instructor;
+	@Column(name="ScannedInStatus")
+	private boolean scannedInStatus;
 	
 		
 	
+	public boolean isScannedInStatus() {
+		return scannedInStatus;
+	}
+	public void setScannedInStatus(boolean scannedInStatus) {
+		this.scannedInStatus = scannedInStatus;
+	}
 	public boolean isInstructor() {
 		return instructor;
 	}
