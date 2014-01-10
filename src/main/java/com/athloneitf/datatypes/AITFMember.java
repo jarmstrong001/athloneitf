@@ -2,12 +2,11 @@ package com.athloneitf.datatypes;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 import com.athloneitf.main.Common;
 
-@Entity(name="AITF_Member_Table")
+@Entity
 public class AITFMember{
 	
 	@Column(name="MemberFirstName")
@@ -16,10 +15,28 @@ public class AITFMember{
 	private String surname;
 	@Column(name="DateOfBirth")
 	private Date memberDob;
+	@Id
 	@Column(name="MemberBarCode")
 	private int memberCode;
+	@Column(name="Instructor")
+	private boolean instructor;
+	@Column(name="ScannedInStatus")
+	private boolean scannedInStatus;
 	
 		
+	
+	public boolean isScannedInStatus() {
+		return scannedInStatus;
+	}
+	public void setScannedInStatus(boolean scannedInStatus) {
+		this.scannedInStatus = scannedInStatus;
+	}
+	public boolean isInstructor() {
+		return instructor;
+	}
+	public void setInstructor(boolean instructor) {
+		this.instructor = instructor;
+	}
 	public Date getMemberDob() {
 		return memberDob;
 	}
@@ -50,7 +67,9 @@ public class AITFMember{
 	}
 	
 	public String toString(){
-		return getFirstName()+" "+getSurname()+"\t"+Common.dobDateFormat.format(getMemberDob())+"\t"+getMemberCode();
+		return getFirstName()+" "+getSurname()+"\t"+
+	Common.dobDateFormat.format(getMemberDob())+"\t"+getMemberCode()+
+	(isInstructor() ? "\tinstructor":"");
 	}
 	
 }

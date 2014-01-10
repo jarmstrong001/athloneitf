@@ -16,7 +16,7 @@ public class UserInterface extends JFrame {
 
 	static {
 		database=new DatabaseMySQL();
-		database.connectDataBase();
+
 	}
 		
 	public UserInterface(){
@@ -44,12 +44,8 @@ public class UserInterface extends JFrame {
         		AITFMember instructor=database.loginInstructor(loginTextField.getText());
         		if(instructor!=null) {
         			System.out.println(instructor.toString());
-        			/*resultLabel.setVisible(false);
-        			resultLabel.setText(instructor.getName()+" logging in");
-        			resultLabel.setVisible(true);*/
-        			MemberCheckInInterface mcii=new MemberCheckInInterface(instructor);
-        			Common.delay(2000);
-        			mcii.setVisible(true);
+        			ClassSelectDialog csd=new ClassSelectDialog(instructor);
+        			csd.setVisible(true);
         			UserInterface.this.dispose();
         		}
         		else {

@@ -10,8 +10,9 @@ public class AITFClassTest {
 	
 	@Test
 	public void test() {
-		Instructor instructor=new Instructor();
-		instructor.setInstructorName("Paul Fox");
+		AITFMember instructor=new AITFMember();
+		instructor.setFirstName("Paul");
+		instructor.setSurname("Fox");
 		
 		AITFClass aitfClass=new AITFClass();
 		aitfClass.setClassDate(new Date(0));
