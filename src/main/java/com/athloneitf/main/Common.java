@@ -55,7 +55,7 @@ public class Common {
 		scanIn.setMemberCode(member.getMemberCode());
 		scanIn.setScanInTime(new Date());
 		member.setScannedInStatus(true);
-		session.save(member);
+		session.update(member);
 		session.save(scanIn);
 		session.getTransaction().commit();
 		
@@ -76,18 +76,35 @@ public class Common {
 	public static void autoScanOut(){
 		List<AITFMember> memberList; 
 		Session session=startSession();
-		Query autoScanOutUpdate = session.createSQLQuery("INSERT INTO MemberScanOut (ScanOutTime,"+
-				"MemberCode,AutoScanOut) VALUES(now(),MemberScanIn.MemberCode,TRUE) "+
-				"WHERE SELECT MemberScanIn.MemberCode WHERE MemberScanIn.ScanInTime<CURRENT_DATE - INTERVAL 3 HOUR");
-		autoScanOutUpdate.executeUpdate();
+		Query memberQuery = session.createQuery("FROM AITFMember ");
+		memberList=memberQuery.list();
 		session.getTransaction().commit();
+		for(AITFMember member:memberList){
+			if(member.isScannedInStatus()) {
+				autoScanOutMember(member);
+			}
+		}
+		
+	}
+	
+	public static void autoScanOutMember(AITFMember member){
+		Session session=startSession();
+		List<MemberScanIn> latest=session.createQuery("FROM MemberScanIn BY scanInTime DESC LIMIT 1").list();
+		if(latest.size()>0){
+			Calendar c= new GregorianCalendar();
+			c.roll(Calendar.HOUR_OF_DAY,false);
+			System.out.println("Time to compare with scan in:"+c.toString());
+		if(latest.get(0).getScanInTime().compareTo(c.getTime())<0){
+			memberScanOut(member,true);
+		}
+				
+		}
+		return;
 	}
 	
 	public static boolean isMemberScannedIn(String barCode){
 		autoScanOut();
-		Session session=startSession();
 		AITFMember member=getMember(barCode);
-		session.getTransaction().commit();
 		return member.isScannedInStatus();		
 	}
 	
