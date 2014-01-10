@@ -46,7 +46,6 @@ public class Common {
 				System.out.println(member.size()+" records");
 				session.getTransaction().commit();
 				if(member.size()>0) returnMember=member.get(0);
-				session.getTransaction().commit();
 				return returnMember;		
 	}
 	
