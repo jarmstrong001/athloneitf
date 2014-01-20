@@ -96,12 +96,17 @@ public class Common {
 		List<MemberScanIn> latest=session.createQuery("FROM MemberScanIn ORDER BY scanInTime DESC").list();
 		session.getTransaction().commit();
 		if(latest.size()>0){
-			Calendar c= new GregorianCalendar();
-			c.roll(Calendar.HOUR_OF_DAY,false);
-			System.out.println("Time to compare with scan in:"+c.toString());
-		if(latest.get(0).getScanInTime().compareTo(c.getTime())<0){
-			memberScanOut(member,true);
-		}
+			Calendar c= Calendar.getInstance();
+			System.out.println("Calendar time:"+
+					c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+			c.add(Calendar.HOUR_OF_DAY,-3);
+			System.out.println("Time to compare with scan in:"+
+					c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
+			System.out.println("Latest Scan in time:"+Common.timeFormat.format(latest.get(0).getScanInTime()));
+			if(c.after(latest.get(0).getScanInTime())){
+				memberScanOut(member,true);
+				System.out.println("Auto scanning out "+member.getName());
+			}
 				
 		}
 		return;
