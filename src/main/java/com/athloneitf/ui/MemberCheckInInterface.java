@@ -11,13 +11,17 @@
  *----------------------------------------------------------------------------*/
 package com.athloneitf.ui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import com.athloneitf.datatypes.AITFClass;
-import com.athloneitf.datatypes.AITFMember;
+import com.athloneitf.datatypes.*;
 import com.athloneitf.main.Common;
 
 public class MemberCheckInInterface extends JFrame {
@@ -30,6 +34,7 @@ public class MemberCheckInInterface extends JFrame {
 		setTitle("Athlone ITF - instructor "+instructor.getName());
 		setSize(400,400);
 		
+				
 		 final JPanel loginPanel = new JPanel();
 	        final JLabel scanInLabel = new JLabel("Enter barcode to scan into class");
 	        final JTextField scanInTextField = new JTextField(10);
@@ -37,7 +42,19 @@ public class MemberCheckInInterface extends JFrame {
 	        loginPanel.add(scanInLabel);
 	        loginPanel.add(scanInTextField);
 	        loginPanel.add(resultLabel);
-	        add(loginPanel);
+	        add(loginPanel,BorderLayout.CENTER);
+	        File file;
+	        if(thisClass.getClassType()==ClassType.TAEKWONDO) file=new File("Taekwondo.png");
+	        else file=new File("Skyboxing.jpg");
+	        BufferedImage myPicture=null;
+	        try {
+				BufferedImage myOversizedPicture=ImageIO.read(file);
+				myPicture=Common.resize(myOversizedPicture,300,200);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+	        add(picLabel,BorderLayout.NORTH);
 	        setVisible(true);
 	        
 	        scanInTextField.requestFocusInWindow();
