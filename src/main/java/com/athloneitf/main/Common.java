@@ -68,7 +68,7 @@ public class Common {
 		scanOut.setScanOutTime(new Date());
 		scanOut.setAutoScanOut(auto);
 		member.setScannedInStatus(false);
-		session.save(member);
+		session.update(member);
 		session.save(scanOut);
 		session.getTransaction().commit();
 	}
@@ -89,7 +89,8 @@ public class Common {
 	
 	public static void autoScanOutMember(AITFMember member){
 		Session session=startSession();
-		List<MemberScanIn> latest=session.createQuery("FROM MemberScanIn BY scanInTime DESC LIMIT 1").list();
+		List<MemberScanIn> latest=session.createQuery("FROM MemberScanIn ORDER BY scanInTime DESC").list();
+		session.getTransaction().commit();
 		if(latest.size()>0){
 			Calendar c= new GregorianCalendar();
 			c.roll(Calendar.HOUR_OF_DAY,false);
@@ -119,6 +120,19 @@ public class Common {
         case 7: return "Saturday"; 
         default: return ("Invalid Day Number");
     }
+	}
+
+	public static AITFClass createClass(AITFSchedule scheduledClass) {
+		AITFClass thisClass=new AITFClass();
+		thisClass.setClassDate(new Date());
+		thisClass.setClassInstructor(Common.getLoggedInInstructor());
+		thisClass.setClassType(scheduledClass.getClassType());
+		thisClass.setAitfScheduleId(scheduledClass);
+		Session session=Common.startSession();
+		session.save(thisClass);
+		session.getTransaction().commit();
+		return thisClass;
+		
 	}
 	
 	

@@ -11,6 +11,7 @@ import org.hibernate.Session;
 
 import com.athloneitf.datatypes.*;
 import com.athloneitf.main.Common;
+import com.athloneitf.main.Main;
 
 public class ClassSelectDialog extends JDialog {
 	
@@ -30,17 +31,10 @@ public class ClassSelectDialog extends JDialog {
 	panel.add(selectClassButton);
 	selectClassButton.addActionListener(new ActionListener()
 			{
-				private AITFClass thisClass=new AITFClass();
+				
 				public void actionPerformed(ActionEvent e){
 					AITFSchedule scheduledClass=classList.get((classJList.getSelectedIndex()));
-					thisClass.setClassDate(new Date());
-					thisClass.setClassInstructor(Common.getLoggedInInstructor());
-					thisClass.setClassType(scheduledClass.getClassType());
-					thisClass.setAitfScheduleId(scheduledClass);
-					session=Common.startSession();
-					session.save(thisClass);
-					session.getTransaction().commit();
-					
+					AITFClass thisClass=Common.createClass(scheduledClass);
 					MemberCheckInInterface mcii=new MemberCheckInInterface(thisClass);
         			mcii.setVisible(true);
 				}

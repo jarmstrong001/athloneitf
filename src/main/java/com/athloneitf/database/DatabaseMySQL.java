@@ -60,43 +60,5 @@ public class DatabaseMySQL {
 	
 	
 	
-	/*private AITFMember parseAITFMember(ResultSet memberResultSet) throws SQLException{
-		while(memberResultSet.next()){
-			AITFMember returnMember=new AITFMember();
-			returnMember.setFirstName(memberResultSet.getString("MemberFirstName"));
-			returnMember.setSurname(memberResultSet.getString("MemberSurname"));
-			returnMember.setMemberDob(memberResultSet.getDate("DateOfBirth"));
-			returnMember.setMemberCode(memberResultSet.getInt("MemberBarCode"));
-			return returnMember;
-		}
-		return null;
-	}
-	
-		
-
-	public void traceMemberList() {
-		// Statements allow to issue SQL queries to the database
-		try {
-			PreparedStatement preparedStatementMemberList = 
-					connect.prepareStatement("Select * from aitf_member_table");
-			resultSet = preparedStatementMemberList.executeQuery();
-			writeResultSet(resultSet,"MemberBarCode","MemberFirstName"
-					,"MemberSurname","DateOfBirth");
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
-
-	}
-
-	public void writeResultSet(ResultSet resultSet,String...fieldNames ) throws SQLException {
-
-		while (resultSet.next()) {
-			for(String fieldName:fieldNames){
-				System.out.println(fieldName + resultSet.getString(fieldName)+"\n");
-			}
-
-		}
-	}
-	*/
 
 }
