@@ -14,7 +14,8 @@ import com.athloneitf.datatypes.*;
 public class Common {
 
 	public static SimpleDateFormat dobDateFormat=new SimpleDateFormat("dd/MMM/yyyy");
-	public static SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm dd/MMM/yyyy");
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MMM/yyyy");
+	public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	public static void delay(int ms){
 		try {

@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,11 +29,19 @@ public class MemberCheckInInterface extends JFrame {
 
 	private static final long serialVersionUID = 6927324337756533205L;
 	private AITFMember instructor;
+	private final JLabel clock;
+	private ActionListener updateClockAction = new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  clock.setText(new Date().toString()); 
+		    }
+      };
 	
 	public MemberCheckInInterface(AITFClass thisClass){
 		instructor=Common.getLoggedInInstructor();
 		setTitle("Athlone ITF - instructor "+instructor.getName());
 		setSize(400,400);
+		Timer t = new Timer(1000, updateClockAction);
+		t.start();
 		
 				
 		 final JPanel loginPanel = new JPanel();
@@ -55,6 +64,12 @@ public class MemberCheckInInterface extends JFrame {
 			}
 	        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
 	        add(picLabel,BorderLayout.NORTH);
+	        
+	        clock= new JLabel(new Date().toString());
+	        
+	        add(clock,BorderLayout.SOUTH);
+	        
+		        
 	        setVisible(true);
 	        
 	        scanInTextField.requestFocusInWindow();
@@ -68,11 +83,11 @@ public class MemberCheckInInterface extends JFrame {
 	        			System.out.println(member.toString());
 	        			if(Common.isMemberScannedIn(""+member.getMemberCode())){
 	        				Common.memberScanOut(member, false);
-	        				resultLabel.setText(member.getName()+" scanned out of class");
+	        				resultLabel.setText(member.getName()+" scanned out of class at "+Common.timeFormat.format(new Date()));
 	        			}
 	        			else {	        				
 	        				Common.memberScanIn(member);
-	        				resultLabel.setText(member.getName()+" scanned into class");
+	        				resultLabel.setText(member.getName()+" scanned into class at "+Common.timeFormat.format(new Date()));
 	        			}
 	        		}
 	        		else {
@@ -84,6 +99,10 @@ public class MemberCheckInInterface extends JFrame {
 	        	
 	        	
 	        });
+	        
+	      
 		}
+	
+	
 }
 
